@@ -365,3 +365,5 @@ FodyWeavers.xsd
 bin
 obj
 /FLY/Token.*/
+
+.env

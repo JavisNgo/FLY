@@ -21,8 +21,6 @@ builder.Services.AddControllersWithViews()
 );
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAutoMapper(typeof(Program), typeof(MapperProfile));
 
@@ -74,7 +72,7 @@ builder.Services.AddSwaggerGen(c =>
 
     var securityRequirement = new OpenApiSecurityRequirement
     {
-        {
+        {\
             new OpenApiSecurityScheme
             {
                 Reference = new OpenApiReference
@@ -90,12 +88,24 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(securityRequirement);
 });
 
-//Define DbContext
+//Define local DbContext
 builder.Services.AddDbContext<FlyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Define GC DbContext
+//builder.Services.AddDbContext<FlyContext>(options =>
+//    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
 
 // CORS
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //DI Service
@@ -134,7 +144,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseSession();
 
-app.UseCors();
+app.UseCors("AllowAll");
 
 app.UseMiddleware<AuthMiddleware>();
 app.UseMiddleware<JwtMiddleware>();

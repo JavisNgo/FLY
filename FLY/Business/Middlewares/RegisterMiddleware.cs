@@ -15,7 +15,9 @@ namespace FLY.Business.Middlewares
         }
         public async Task InvokeAsync(HttpContext context)
         {
-            if(context.Request.Path.StartsWithSegments("/api/v1/register") && context.Request.Method == "POST")
+            if(context.Request.Path.StartsWithSegments("/api/v1/register") 
+                && !context.Request.Path.Equals("/api/v1/register/verify") 
+                && context.Request.Method == "POST")
             {
                 context.Request.EnableBuffering();
                 var body = await new StreamReader(context.Request.Body).ReadToEndAsync();

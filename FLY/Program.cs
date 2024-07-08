@@ -72,7 +72,7 @@ builder.Services.AddSwaggerGen(c =>
 
     var securityRequirement = new OpenApiSecurityRequirement
     {
-        {\
+        {
             new OpenApiSecurityScheme
             {
                 Reference = new OpenApiReference
@@ -89,11 +89,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //Define local DbContext
-builder.Services.AddDbContext<FlyContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-//Define GC DbContext
 //builder.Services.AddDbContext<FlyContext>(options =>
-//    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Define GC DbContext
+builder.Services.AddDbContext<FlyContext>(options =>
+    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
 
 // CORS
 builder.Services.AddCors(options =>
@@ -128,7 +128,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 
 //Register backgroundService
-builder.Services.AddHostedService<TokenCleanupService>();
+//builder.Services.AddHostedService<TokenCleanupService>();
 
 DotNetEnv.Env.Load();
 
@@ -138,9 +138,20 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FLY API v1"));
+    //app.UseSwagger();
+    //app.UseSwaggerUI(c =>
+    //{
+    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FLY API v1");
+    //});
 }
+
+//Un-comment when build docker
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseSession();
 
@@ -150,7 +161,7 @@ app.UseMiddleware<AuthMiddleware>();
 app.UseMiddleware<JwtMiddleware>();
 app.UseMiddleware<RegisterMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

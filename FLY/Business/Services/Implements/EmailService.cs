@@ -3,38 +3,33 @@ using Google.Apis.Gmail.v1;
 using Google.Apis.Gmail.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using MailKit.Net.Smtp;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using Microsoft.IdentityModel.Tokens;
 using MimeKit;
-using System.Buffers.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FLY.Business.Services.Implements
 {
     public class EmailService : IEmailService
     {
-        private readonly string? _credentialsPath;
-        private readonly string? _mailboxAddress;
-        private UserCredential? _credential;
+        private readonly string? _mailboxEmail;
+        private readonly string? _mailboxPassword;
 
         public EmailService()
         {
-            _credentialsPath = Environment.GetEnvironmentVariable("CREDENTIALS_PATH");
-            _mailboxAddress = Environment.GetEnvironmentVariable("MAILBOX_ADDRESS");
+            _mailboxEmail = Environment.GetEnvironmentVariable("MAILBOX_EMAIL");
+            _mailboxPassword = Environment.GetEnvironmentVariable("MAILBOX_PASSWORD");
         }
 
         public async Task SendVerificationEmailAsync(string email, string verificationCode)
         {
             try
             {
-                var credential = await GetCredentialAsync();
-                var service = new GmailService(new BaseClientService.Initializer()
-                {
-                    ApplicationName = "FLY",
-                    HttpClientInitializer = credential
-                });
+                string smtpServer = "smtp.gmail.com";
+                int port = 465;
 
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("FLY", _mailboxAddress));
+                message.From.Add(new MailboxAddress("FLY", _mailboxEmail));
                 message.To.Add(new MailboxAddress("", email));
                 message.Subject = "FLY: Email Verification Code";
                 message.Body = new TextPart("plain")
@@ -47,41 +42,30 @@ namespace FLY.Business.Services.Implements
                     Raw = Base64UrlEncoder.Encode(message.ToString())
                 };
 
-                await service.Users.Messages.Send(gmailMessage, "me").ExecuteAsync();
-            }
-            catch (Exception ex)
-            {
-                // Log or handle the exception as needed
-                throw new InvalidOperationException("Failed to send verification email", ex);
-            }
-        }
-
-        public async Task<UserCredential> GetCredentialAsync()
-        {
-            if (_credential != null && !_credential.Token.IsExpired(_credential.Flow.Clock))
-            {
-                return _credential;
-            }
-
-            try
-            {
-                using (var stream = new FileStream(_credentialsPath, FileMode.Open, FileAccess.Read))
+                using (var client = new SmtpClient())
                 {
-                    _credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                        GoogleClientSecrets.FromStream(stream).Secrets,
-                        new[] { GmailService.Scope.GmailSend },
-                        "user", CancellationToken.None,
-                        new FileDataStore("Token.json", true)
-                    );
+                    try
+                    {
+                        client.Connect(smtpServer, port, true);
+                        client.Authenticate(_mailboxEmail, _mailboxPassword);
+
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
                 }
+
+                //await service.Users.Messages.Send(gmailMessage, "me").ExecuteAsync();
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
-                throw new InvalidOperationException("Failed to get Google API credentials", ex);
+                throw new Exception($"Failed to send verification email with error: {ex.Message}");
             }
-
-            return _credential;
         }
+
+        
     }
 }

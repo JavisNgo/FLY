@@ -43,7 +43,7 @@ namespace FLY.Business.Services.Implements
             }
             catch (Exception ex)
             {
-                throw new ApiException(System.Net.HttpStatusCode.Unauthorized, $"Error {authRequest.Email} is not correct");
+                throw new ApiException(System.Net.HttpStatusCode.InternalServerError, $"Internal Error: {ex.Message}");
             }
         }
 

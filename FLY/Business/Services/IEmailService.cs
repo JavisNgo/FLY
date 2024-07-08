@@ -5,6 +5,5 @@ namespace FLY.Business.Services
     public interface IEmailService
     {
         Task SendVerificationEmailAsync(string email, string vertificationCode);
-        Task<UserCredential> GetCredentialAsync();
     }
 }

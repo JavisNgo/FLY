@@ -4,9 +4,9 @@
     {
         public int FeedbackId { get; set; }
 
-        public int AccountId { get; set; }
+        public string Email { get; set; }
 
-        public int ShopId { get; set; }
+        public string ShopName { get; set; }
 
         public string Content { get; set; } = null!;
 

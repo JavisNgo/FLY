@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews()
 );
 
 builder.Services.AddControllers();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(Program), typeof(MapperProfile));
 
 // Configure JWT Authentication
@@ -115,6 +115,7 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IGoogleDriveService, GoogleDriveService>();
 builder.Services.AddScoped<IShopService, ShopService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 
 // Register in-memory caching
 builder.Services.AddMemoryCache();
@@ -162,7 +163,6 @@ app.UseMiddleware<JwtMiddleware>();
 app.UseMiddleware<RegisterMiddleware>();
 
 //app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -21,7 +21,7 @@ namespace FLY.Business.Models.Product
 
         public double ProductPrice { get; set; }
 
-        public DateTime ProductQuatity { get; set; }
+        public int ProductQuatity { get; set; }
 
         public string ImageProduct { get; set; } = null!;
 

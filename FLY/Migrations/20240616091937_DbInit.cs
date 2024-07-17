@@ -216,7 +216,7 @@ namespace FLY.Migrations
                     ProductName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ProductInfor = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     ProductPrice = table.Column<float>(type: "real", nullable: false),
-                    ProductQuatity = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProductQuatity = table.Column<int>(type: "int", nullable: false),
                     ImageProduct = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },

@@ -128,7 +128,7 @@ namespace FLY.Controllers
         }
 
         // Manager Order GetOrderDetailAsync
-        [HttpGet("/api/v1/ShopOrder")]
+        [HttpGet("/api/v1/LShopOrder")]
         public async Task<IActionResult> GetAllOrders(int shopId)
         {
             try

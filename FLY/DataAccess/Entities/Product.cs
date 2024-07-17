@@ -31,7 +31,7 @@ public partial class Product
     public float ProductPrice { get; set; }
 
     [Required]
-    public DateTime ProductQuatity { get; set; }
+    public int ProductQuatity { get; set; }
 
     [Required]
     [MaxLength(250)]

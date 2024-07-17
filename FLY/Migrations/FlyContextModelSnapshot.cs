@@ -266,8 +266,8 @@ namespace FLY.Migrations
                     b.Property<float>("ProductPrice")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("ProductQuatity")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ProductQuatity")
+                        .HasColumnType("int");
 
                     b.Property<int>("ShopId")
                         .HasColumnType("int");

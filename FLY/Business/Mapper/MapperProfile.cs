@@ -27,8 +27,11 @@ namespace FLY.Business.Mapper
             CreateMap<Product, ProductResponse>();
             CreateMap<ProductRequest, Product>();
             ///Mapper Feedback
-            CreateMap<Feedback, FeedbackResponse>();
+            CreateMap<Feedback, FeedbackResponse>()
+                .ForMember(dest => dest.ShopName, src => src.MapFrom(x => x.Shop.ShopName))
+                .ForMember(dest => dest.Email, src => src.MapFrom(x => x.Account.Email));
             CreateMap<FeedbackRequest, Feedback>();
+            CreateMap<UpdateFeedbackRequest, Feedback>();
             ///Mapper Rating
             CreateMap<Rating, RatingResponse>();
             CreateMap<RatingRequest, Rating>();

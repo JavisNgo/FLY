@@ -33,7 +33,9 @@ namespace FLY.Business.Mapper
             CreateMap<FeedbackRequest, Feedback>();
             CreateMap<UpdateFeedbackRequest, Feedback>();
             ///Mapper Rating
-            CreateMap<Rating, RatingResponse>();
+            CreateMap<Rating, RatingResponse>()
+                .ForMember(dest => dest.ShopName, src => src.MapFrom(x => x.Shop.ShopName))
+                .ForMember(dest => dest.Email, src => src.MapFrom(x => x.Account.Email));
             CreateMap<RatingRequest, Rating>();
             ///Mapper ProductCategory
             CreateMap<ProductCategory, ProductCategoryResponse>();

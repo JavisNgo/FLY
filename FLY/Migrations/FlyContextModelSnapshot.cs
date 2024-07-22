@@ -184,9 +184,6 @@ namespace FLY.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShopId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -197,8 +194,6 @@ namespace FLY.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("ShopId");
 
                     b.HasIndex("AccountId");
 
@@ -222,6 +217,9 @@ namespace FLY.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ShopId")
+                        .HasColumnType("int");
+
                     b.Property<float>("ProductPrice")
                         .HasColumnType("real");
 
@@ -231,6 +229,8 @@ namespace FLY.Migrations
                     b.HasKey("OrderDetailId");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ShopId");
 
                     b.HasIndex("ProductId");
 

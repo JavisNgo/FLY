@@ -64,6 +64,10 @@ namespace FLY.Business.Services.Implements
                                                 .GetAsync(filter: x => x.AccountId == accountId
                                                                     && x.Status == 0,
                                                           includeProperties: "Product,Account");
+            if(getCartAsync.IsNullOrEmpty())
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "The cart is empty");
+            }
             var getCart = getCartAsync.FirstOrDefault();
             var response = _mapper.Map<CartResponse>(getCart);
             response.ProductInCarts = _mapper.Map<List<ProductInCartResponse>>(getCartAsync);

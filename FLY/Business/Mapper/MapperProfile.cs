@@ -48,6 +48,7 @@ namespace FLY.Business.Mapper
             ///Mapper Order
             CreateMap<Order, OrderResponse>();
             CreateMap<OrderResponse, Order>();
+            CreateMap<CreateOrderRequest, Order>();
             ///Mapper OrderDetail
             CreateMap<OrderDetail, OrderDetailResponse>();
             CreateMap<OrderDetailRequest, OrderDetail>();

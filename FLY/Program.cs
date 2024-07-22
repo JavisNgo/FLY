@@ -89,13 +89,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //Define local DbContext
-//builder.Services.AddDbContext<FlyContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-//Define GC DbContext
 builder.Services.AddDbContext<FlyContext>(options =>
-    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Define GC DbContext
+//builder.Services.AddDbContext<FlyContext>(options =>
+//    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
 
-// CORS
+//// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",

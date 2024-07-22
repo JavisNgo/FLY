@@ -321,7 +321,7 @@ namespace FLY.Migrations
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                       name: "FK_OrderDetail_Shops_ShopId",
+                       name: "FK_OrderDetails_Shops_ShopId",
                        column: x => x.ShopId,
                        principalTable: "Shops",
                        principalColumn: "ShopId",
@@ -374,8 +374,8 @@ namespace FLY.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ShopId",
-                table: "Orders",
+                name: "IX_OrderDetails_ShopId",
+                table: "OrderDetails",
                 column: "ShopId");
 
             migrationBuilder.CreateIndex(

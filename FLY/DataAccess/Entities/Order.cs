@@ -13,8 +13,7 @@ public partial class Order
 
     [Required]
     public int AccountId { get; set; }
-    [Required]
-    public int ShopId { get; set; }
+
 
     [Required]
     public DateTime OrderDate { get; set; }
@@ -28,8 +27,6 @@ public partial class Order
     [ForeignKey("AccountId")]
     public Account Account { get; set; }
 
-    [ForeignKey("ShopId")]
-    public Shop Shop { get; set; }
 
     public ICollection<OrderDetail> OrderDetails { get; set; }
 }

@@ -117,6 +117,7 @@ builder.Services.AddScoped<IShopService, ShopService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 // Register in-memory caching
 builder.Services.AddMemoryCache();

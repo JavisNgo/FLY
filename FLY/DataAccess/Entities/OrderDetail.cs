@@ -16,6 +16,8 @@ public partial class OrderDetail
 
     [Required]
     public int ProductId { get; set; }
+    [Required]
+    public int ShopId { get; set; }
 
     [Required]
     public int OrderQuantity { get; set; }
@@ -31,4 +33,8 @@ public partial class OrderDetail
 
     [ForeignKey("ProductId")]
     public Product Product { get; set; }
+
+    [ForeignKey("ShopId")]
+    public Shop Shop { get; set; }
+
 }

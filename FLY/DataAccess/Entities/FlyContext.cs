@@ -144,6 +144,12 @@ public partial class FlyContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<OrderDetail>()
+            .HasOne(od => od.Shop)
+            .WithMany(o => o.OrderDetails)
+            .HasForeignKey(od => od.ShopId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<OrderDetail>()
             .HasOne(od => od.Product)
             .WithMany(p => p.OrderDetails)
             .HasForeignKey(od => od.ProductId)

@@ -26,7 +26,5 @@ public partial class Order
 
     [ForeignKey("AccountId")]
     public Account Account { get; set; }
-
-
     public ICollection<OrderDetail> OrderDetails { get; set; }
 }

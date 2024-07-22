@@ -508,12 +508,6 @@ namespace FLY.Migrations
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                    b.HasOne("FLY.DataAccess.Entities.Shop", "Shop")
-                        .WithMany("Orders")
-                        .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                    b.Navigation("Shop");
                     b.Navigation("Account");
                 });
 
@@ -530,9 +524,14 @@ namespace FLY.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                    b.HasOne("FLY.DataAccess.Entities.Shop", "Shop")
+                       .WithMany("OrderDetails")
+                       .HasForeignKey("ShopId")
+                       .OnDelete(DeleteBehavior.Cascade)
+                       .IsRequired();
 
+                    b.Navigation("Shop");
                     b.Navigation("Order");
-
                     b.Navigation("Product");
                 });
 
@@ -642,7 +641,7 @@ namespace FLY.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Products");
-
+                   
                     b.Navigation("Ratings");
                     b.Navigation("VoucherOfshops");
 

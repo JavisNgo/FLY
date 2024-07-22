@@ -130,6 +130,7 @@ namespace FLY.Migrations
                    OrderId = table.Column<int>(type: "int", nullable: false)
                        .Annotation("SqlServer:Identity", "1, 1"),
                    AccountId = table.Column<int>(type: "int", nullable: false),
+                   ShopId = table.Column<int>(type: "int", nullable: false),
                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                    TotalPrice = table.Column<float>(type: "real", nullable: false),
                    Status = table.Column<int>(type: "int", nullable: false)
@@ -143,6 +144,12 @@ namespace FLY.Migrations
                        principalTable: "Accounts",
                        principalColumn: "AccountId",
                        onDelete: ReferentialAction.Cascade);
+                   table.ForeignKey(
+                       name: "FK_Orders_Shops_ShopId",
+                       column: x => x.ShopId,
+                       principalTable: "Shops",
+                       principalColumn: "ShopId",
+                       onDelete: ReferentialAction.NoAction);
                });
 
             migrationBuilder.CreateTable(
@@ -300,7 +307,6 @@ namespace FLY.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ShopId = table.Column<int>(type: "int", nullable: false),
                     OrderQuantity = table.Column<int>(type: "int", nullable: false),
                     ProductPrice = table.Column<float>(type: "real", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -320,12 +326,6 @@ namespace FLY.Migrations
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                       name: "FK_OrderDetail_Shops_ShopId",
-                       column: x => x.ShopId,
-                       principalTable: "Shops",
-                       principalColumn: "ShopId",
-                       onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

@@ -71,5 +71,24 @@ namespace FLY.Business.Services.Implements
                 }
             }
         }
+
+        public async Task<float> GetRevenueAdminAsync(int month, int year)
+        {
+            try
+            {
+                // Lấy tất cả các đơn hàng dựa vào thời gian (month, year)
+                var orders = await _unitOfWork.OrderRepository
+                                              .FindAsync(o => o.OrderDate.Month == month &&
+                                                              o.OrderDate.Year == year);
+
+                // Tính 5% doanh thu cho mỗi đơn hàng và tổng hợp lại
+                var totalRevenue = orders.Sum(o => o.TotalPrice * 0.05f);
+                return totalRevenue;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

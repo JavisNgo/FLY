@@ -37,6 +37,23 @@ namespace FLY.Controllers
             }
         }
 
+
+        [HttpGet("/api/v1/AdminRevenue")]
+        public async Task<IActionResult> GetAdminRevenueAsync( int month, int year)
+        {
+            try
+            {
+                var result = await _adminService.GetRevenueAdminAsync(month, year);
+                if (result != null) return Ok(result);
+                else return StatusCode(500, "Something wrong when get order");
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(((int)ex.statusCode), ex.Message);
+            }
+        }
+
+
         [HttpGet("/api/v1/ShopDetail")]
         public async Task<IActionResult> GetShopByShopId(int shopId)
         {

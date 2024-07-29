@@ -128,20 +128,20 @@ namespace FLY.Controllers
         }
 
         // Manager Order GetOrderDetailAsync
-        //[HttpGet("/api/v1/LShopOrder")]
-        //public async Task<IActionResult> GetAllOrders(int shopId)
-        //{
-        //    try
-        //    {
-        //        var result = await _shopManagerService.GetAllOrdersAsync(shopId);
-        //        if (result != null) return Ok(result);
-        //        else return StatusCode(500, "Something wrong when get order");
-        //    }
-        //    catch (ApiException ex)
-        //    {
-        //        return StatusCode(((int)ex.statusCode), ex.Message);
-        //    }
-        //}
+        [HttpGet("/api/v1/LShopOrder")]
+        public async Task<IActionResult> GetAllOrders(int shopId)
+        {
+            try
+            {
+                var result = await _shopManagerService.GetAllOrdersAsync(shopId);
+                if (result != null) return Ok(result);
+                else return StatusCode(500, "Something wrong when get order");
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(((int)ex.statusCode), ex.Message);
+            }
+        }
 
         [HttpGet("/api/v1/ShopOrderDetail")]
         public async Task<IActionResult> GetOrderDetail(int OrderId)
@@ -173,20 +173,20 @@ namespace FLY.Controllers
         }
         // Manager Revenue
 
-        //[HttpGet("/api/v1/ShopRevenue")]
-        //public async Task<IActionResult> GetRevenueAsync(int shopId, int month, int year)
-        //{
-        //    try
-        //    {
-        //        var result = await _shopManagerService.GetRevenueAsync(shopId,month,year);
-        //        if (result != null) return Ok(result);
-        //        else return StatusCode(500, "Something wrong when get order");
-        //    }
-        //    catch (ApiException ex)
-        //    {
-        //        return StatusCode(((int)ex.statusCode), ex.Message);
-        //    }
-        //}
+        [HttpGet("/api/v1/ShopRevenue")]
+        public async Task<IActionResult> GetRevenueAsync(int shopId, int month, int year)
+        {
+            try
+            {
+                var result = await _shopManagerService.GetRevenueAsync(shopId, month, year);
+                if (result != null) return Ok(result);
+                else return StatusCode(500, "Something wrong when get order");
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(((int)ex.statusCode), ex.Message);
+            }
+        }
         // Manager Voucher
 
         [HttpGet("/api/v1/ShopVoucher")]

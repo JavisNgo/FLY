@@ -180,19 +180,25 @@ namespace FLY.Business.Services.Implements
 
         // Manager Order
 
-        //public async Task<List<OrderResponse>> GetAllOrdersAsync(int ShopId)
-        //{
-        //    try
-        //    {
-        //        var od = await _unitOfWork.OrderRepository.FindAsync(a => a.ShopId == ShopId);
-        //        var result = _mapper.Map<List<OrderResponse>>(od.ToList());
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
+        public async Task<List<OrderResponse>> GetAllOrdersAsync(int shopId)
+        {
+            try
+            {
+                var orderDetailIds = await _unitOfWork.OrderDetailRepository
+                                                      .FindAsync(od => od.ShopId == shopId);
+                var orderIds = orderDetailIds.Select(od => od.OrderId).Distinct().ToList();
+
+                var orders = await _unitOfWork.OrderRepository
+                                              .FindAsync(order => orderIds.Contains(order.OrderId));
+                var result = _mapper.Map<List<OrderResponse>>(orders.ToList());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
 
         public async Task<bool> UpdateOrderInformation(OrderRequest request)
         {
@@ -237,24 +243,28 @@ namespace FLY.Business.Services.Implements
         }
 
         // Manager revenue
-        //public async Task<float> GetRevenueAsync(int shopId, int month, int year)
-        //{
-        //    try
-        //    {
-        //        var orders = await _unitOfWork.OrderRepository.FindAsync(a =>
-        //            //a.ShopId == shopId &&
-        //            a.OrderDate.Month == month &&
-        //            a.OrderDate.Year == year);
+        public async Task<float> GetRevenueAsync(int shopId, int month, int year)
+        {
+            try
+            {
+                var orderDetails = await _unitOfWork.OrderDetailRepository
+                                             .FindAsync(od => od.ShopId == shopId);
+                // Lấy danh sách OrderId từ OrderDetail
+                var orderIds = orderDetails.Select(od => od.OrderId).Distinct().ToList();
+                // Lấy danh sách Order dựa vào OrderId và thời gian (month, year)
+                var orders = await _unitOfWork.OrderRepository
+                                              .FindAsync(o => orderIds.Contains(o.OrderId) &&
+                                                                 o.OrderDate.Month == month &&
+                                                                 o.OrderDate.Year == year);
+                var totalRevenue = orders.Sum(o => o.TotalPrice);
 
-        //        var totalRevenue = orders.Sum(o => o.TotalPrice);
-
-        //        return totalRevenue;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
+                return totalRevenue;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         // Manager Voucher
         public async Task<List<VoucherOfShopResponse>> GetAllVouchersAsync(int ShopId)

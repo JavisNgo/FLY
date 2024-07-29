@@ -6,6 +6,7 @@ namespace FLY.Business.Services
     {
         Task<bool> UpdateShopStatus(ShopRequest request);
         Task<bool> DeleteShop(ShopRequest request);
+        Task<float> GetRevenueAdminAsync(int month, int year);
 
     }
 }

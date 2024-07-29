@@ -19,12 +19,12 @@ namespace FLY.Business.Services
         Task<bool> DeleteProductInformation(ProductRequest request);
         Task<bool> CreateProductInformation(ProductResponse response);
         // Manager Order
-        //Task<List<OrderResponse>> GetAllOrdersAsync(int ShopId);
+        Task<List<OrderResponse>> GetAllOrdersAsync(int ShopId);
         Task<bool> UpdateOrderInformation(OrderRequest request);
         Task<List<OrderDetailResponse>> GetOrderDetailAsync(int OrderId);
 
         // Manager Revenue
-        //Task<float> GetRevenueAsync(int shopId, int month, int year);
+        Task<float> GetRevenueAsync(int shopId, int month, int year);
 
         // Manager Voucher
         Task<List<VoucherOfShopResponse>> GetAllVouchersAsync(int ShopId);

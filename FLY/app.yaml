@@ -1,0 +1,17 @@
+﻿runtime: custom
+env: flex
+
+runtime_config:
+  operating_system: ubuntu22
+
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+env_variables:
+    MAILBOX_EMAIL: "ducntse161921@fpt.edu.vn"
+    MAILBOX_PASSWORD: "pqaa jwbv zhbf hxox"
+    GOOGLE_CLOUD_CONNECTION: "Server=tcp:34.173.232.235;Initial Catalog=FLY;Persist Security Info=False;User ID=sqlserver;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"

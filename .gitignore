@@ -366,4 +366,4 @@ bin
 obj
 /FLY/Token.*/
 
-.env
+/FLY/.env

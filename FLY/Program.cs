@@ -89,11 +89,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //Define local DbContext
-builder.Services.AddDbContext<FlyContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-//Define GC DbContext
 //builder.Services.AddDbContext<FlyContext>(options =>
-//    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Define GC DbContext
+builder.Services.AddDbContext<FlyContext>(options =>
+    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
 
 //// CORS
 builder.Services.AddCors(options =>
@@ -119,6 +119,8 @@ builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IShopManagerService, ShopManagerService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // Register in-memory caching
 builder.Services.AddMemoryCache();

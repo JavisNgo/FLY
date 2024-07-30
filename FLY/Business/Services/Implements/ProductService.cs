@@ -21,7 +21,7 @@ namespace FLY.Business.Services.Implements
             _cache = cache;
         }
 
-        public async Task<List<ProductResponse>> GetAllProductsAsync(string sessionId, int pageIndex, int pageSize)
+        public async Task<List<ProductResponse>> GetAllProductsAsync(string sessionId, int? pageIndex, int? pageSize)
         {
             try
             {
@@ -29,14 +29,16 @@ namespace FLY.Business.Services.Implements
                 if (!_cache.TryGetValue(cacheKey, out List<ProductResponse> shuffledItems))
                 {
                     var productList = await _unitOfWork.ProductRepository
-                        .GetAsync(p => p.Status == 1, null, "ProductCategory");
+                        .GetAsync(p => p.Status == 1, null, "ProductCategory", pageIndex, pageSize);
                     shuffledItems = _mapper.Map<List<ProductResponse>>(productList.ToList()
                         .OrderBy(x => _random.Next()));
                     _cache.Set(cacheKey, shuffledItems, TimeSpan.FromMinutes(5));
+                } else if (pageIndex.HasValue && pageSize.HasValue)
+                {
+                    return shuffledItems.Skip(pageIndex.Value * pageSize.Value).Take(pageSize.Value).ToList();
                 }
-                var pagedItems = shuffledItems.Skip((pageIndex - 1) * pageSize).Take(pageIndex).ToList();
-
-                return pagedItems;
+                
+                return shuffledItems;
             }
             catch (Exception ex)
             {

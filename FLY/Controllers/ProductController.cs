@@ -48,8 +48,8 @@ namespace FLY.Controllers
             }
         }
         [HttpGet("/api/v1/products")]
-        public async Task<IActionResult> GetProducts([FromQuery] int pageIndex = 10, 
-            [FromQuery] int pageSize = 1)
+        public async Task<IActionResult> GetProducts([FromQuery] int? pageIndex = null, 
+            [FromQuery] int? pageSize = null)
         {
             try
             {

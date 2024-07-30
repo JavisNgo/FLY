@@ -63,7 +63,7 @@ namespace FLY.DataAccess.Repositories.Implements
             {
                 int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 1;
                 int validPageSize = pageSize.HasValue ? pageSize.Value : 10;
-                query = query.Skip(validPageIndex * validPageSize).Take(validPageIndex);
+                query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
             }
             return await query.ToListAsync();
         }

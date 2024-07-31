@@ -29,7 +29,7 @@ namespace FLY.Business.Services.Implements
                 if (!_cache.TryGetValue(cacheKey, out List<ProductResponse> shuffledItems))
                 {
                     var productList = await _unitOfWork.ProductRepository
-                        .GetAsync(p => p.Status == 1, null, "ProductCategory", pageIndex, pageSize);
+                        .GetAsync(p => p.Status == 1, null, "Shop", pageIndex, pageSize);
                     shuffledItems = _mapper.Map<List<ProductResponse>>(productList.ToList()
                         .OrderBy(x => _random.Next()));
                     _cache.Set(cacheKey, shuffledItems, TimeSpan.FromMinutes(5));

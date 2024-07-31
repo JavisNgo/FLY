@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FLY.Business.Models.Account;
+using FLY.Business.Models.Blog;
 using FLY.Business.Models.Carte;
 using FLY.Business.Models.Customer;
 using FLY.Business.Models.Feedback;
@@ -62,7 +63,8 @@ namespace FLY.Business.Mapper
                 .ForMember(dest => dest.ProductPrice, src => src.MapFrom(x => x.Product.ProductPrice))
                 .ForMember(dest => dest.ProductName, src => src.MapFrom(x => x.Product.ProductName))
                 .ForMember(dest => dest.ProductCategoryName, src => src.MapFrom(x => x.Product.ProductCategory.ProductCategoryName));
-
+            //Mapper Blog
+            CreateMap<Blog, BlogResponse>();
         }
     }
 }

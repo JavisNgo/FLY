@@ -16,7 +16,7 @@ namespace FLY.Controllers
             _blogService = blogService;
         }
 
-        [HttpGet]
+        [HttpGet("/api/v1/blogs")]
         public async Task<IActionResult> GetBlogs()
         {
             try

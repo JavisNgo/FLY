@@ -18,9 +18,9 @@ namespace FLY.Controllers
             _productService = productService;
             _cache = cache;
         }
-        [HttpPost("/api/v1/products/category/{categoryName}")]
+        [HttpGet("/api/v1/products/category")]
         public async Task<IActionResult> GetProductsByCategory([FromQuery]string categoryName, 
-            [FromQuery]int pageIndex = 10, [FromQuery]int pageSize = 1)
+            [FromQuery]int? pageIndex = null, [FromQuery]int? pageSize = null)
         {
             try
             {
@@ -33,9 +33,9 @@ namespace FLY.Controllers
             }
         }
 
-        [HttpPost("/api/v1/products")]
+        [HttpGet("/api/v1/products/name")]
         public async Task<IActionResult> GetProductsByName([FromQuery]string productName,
-            [FromQuery] int pageIndex = 10, [FromQuery] int pageSize = 1)
+            [FromQuery] int? pageIndex = null, [FromQuery] int? pageSize = null)
         {
             try
             {
@@ -73,6 +73,21 @@ namespace FLY.Controllers
                 }
                 var result = await _productService.GetAllProductsAsync(sessionId, pageIndex, pageSize);
                 if (!result.Any()) return NotFound("No products exist");
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("/api/v1/products/{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            try
+            {
+                var result = await _productService.GetProductByIdAsync(id);
+                if (result == null) return NotFound("No products exist");
                 return Ok(result);
             }
             catch (Exception ex)

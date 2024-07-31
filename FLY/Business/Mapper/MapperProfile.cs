@@ -65,6 +65,7 @@ namespace FLY.Business.Mapper
                 .ForMember(dest => dest.ProductCategoryName, src => src.MapFrom(x => x.Product.ProductCategory.ProductCategoryName));
             //Mapper Blog
             CreateMap<Blog, BlogResponse>();
+            CreateMap<BlogRequest, Blog>();
         }
     }
 }

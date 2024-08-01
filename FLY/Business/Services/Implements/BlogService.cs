@@ -105,13 +105,12 @@ namespace FLY.Business.Services.Implements
                 throw new Exception(ex.Message);
             }
         }
-
-        public async Task<BlogResponse> GetByAccountIdAsync(int accountId)
+        public async Task<List<BlogResponse>> GetByAccountIdAsync(int accountId)
         {
             try
             {
                 var blogs = await _unitOfWork.BlogRepository.GetAsync(filter: x => x.AccountId == accountId);
-                var result = _mapper.Map<BlogResponse>(blogs);
+                var result = _mapper.Map<List<BlogResponse>>(blogs);
                 return result;
             }
             catch (Exception ex)

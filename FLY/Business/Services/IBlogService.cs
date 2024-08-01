@@ -10,7 +10,7 @@ namespace FLY.Business.Services
         Task<List<BlogResponse>> GetAllAsync();
         Task<List<BlogResponse>> GetByAccountIdAsync(int accountId);
         Task<BlogResponse> GetByBlogIdAsync(int blogId);
-        Task<BlogResponse> GetBlogsByNameAsync(string name);
+        Task<List<BlogResponse>> GetBlogsByNameAsync(string name);
         Task<bool> CreateBlog(BlogResponse respone);
         Task<bool> UpdateBlog(BlogRequest request);
         Task<bool> DeleteBlog(BlogRequest request);

@@ -89,11 +89,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //Define local DbContext
-builder.Services.AddDbContext<FlyContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-//Define GC DbContext
 //builder.Services.AddDbContext<FlyContext>(options =>
- //   options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Define GC DbContext
+builder.Services.AddDbContext<FlyContext>(options =>
+    options.UseSqlServer(Environment.GetEnvironmentVariable("GOOGLE_CLOUD_CONNECTION")));
 
 //// CORS
 builder.Services.AddCors(options =>
@@ -146,11 +146,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FLY API v1");
-    });
+    //app.UseSwagger();
+    //app.UseSwaggerUI(c =>
+    //{
+    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FLY API v1");
+    //});
 }
 
 //Un-comment when build docker

@@ -31,5 +31,18 @@ namespace FLY.Controllers
                 return StatusCode(((int)ex.statusCode), ex.Message);
             }
         }
+        [HttpGet("/api/v1/user/{accountId}")]
+        public async Task<IActionResult> GetByAccountId([FromQuery] int accountId)
+        {
+            try
+            {
+                var result = await _customerService.GetByAccountIdAsync(accountId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

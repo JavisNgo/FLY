@@ -1,0 +1,3 @@
+﻿MAILBOX_EMAIL=ducntse161921@fpt.edu.vn
+MAILBOX_PASSWORD=pqaa jwbv zhbf hxox
+GOOGLE_CLOUD_CONNECTION=Server=tcp:34.173.232.235;Initial Catalog=FLY;Persist Security Info=False;User ID=sqlserver;Password=12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;

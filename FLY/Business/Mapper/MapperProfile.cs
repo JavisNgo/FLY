@@ -21,6 +21,7 @@ namespace FLY.Business.Mapper
         {
             ///Mapper Authentication
             CreateMap<Account, AuthResponse>();
+            CreateMap<Account, AccountResponse>();
             CreateMap<RegisterRequest, Account>();
             ///Mapper Shop
             CreateMap<Shop, ShopResponse>();

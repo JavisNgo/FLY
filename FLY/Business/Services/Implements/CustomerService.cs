@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using FLY.Business.Exceptions;
+using FLY.Business.Models.Account;
+using FLY.Business.Models.Blog;
 using FLY.Business.Models.Customer;
 using FLY.DataAccess.Entities;
 using FLY.DataAccess.Repositories;
@@ -16,6 +18,20 @@ namespace FLY.Business.Services.Implements
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+        }
+
+        public async Task<AccountResponse> GetByAccountIdAsync(int accountId)
+        {
+            try
+            {
+                var account = await _unitOfWork.AccountRepository.GetByIDAsync(accountId);
+                var result = _mapper.Map<AccountResponse>(account);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<bool> UpdateCustomerInformation(UpdateInfoRequest request)

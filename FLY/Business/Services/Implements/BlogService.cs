@@ -22,7 +22,7 @@ namespace FLY.Business.Services.Implements
             _mapper = mapper;
         }
 
-        public async Task<bool> CreateBlog(BlogResponse respone)
+        public async Task<bool> CreateBlog(CreateBlogResponse respone)
         {
             var pd = await _unitOfWork.BlogRepository.FindAsync(a => a.BlogId == respone.BlogId);
             var existedBl = pd.FirstOrDefault();
@@ -37,9 +37,9 @@ namespace FLY.Business.Services.Implements
                 try
                 {
                     Blog newBlog = _mapper.Map<Blog>(respone);
+                    newBlog.Status = 1;
                     await _unitOfWork.BlogRepository.InsertAsync(newBlog);
                     await _unitOfWork.SaveAsync();
-
                     await transaction.CommitAsync();
                     return true;
                 }
@@ -51,7 +51,7 @@ namespace FLY.Business.Services.Implements
             }
         }
 
-        public async Task<bool> DeleteBlog(BlogRequest request)
+        public async Task<bool> DeleteBlog(UpdateBlogRequest request)
         {
             var bl = await _unitOfWork.BlogRepository.FindAsync(a => a.BlogId == request.BlogId);
             var existedBl = bl.FirstOrDefault();
@@ -64,7 +64,7 @@ namespace FLY.Business.Services.Implements
             {
                 try
                 {
-                    _mapper.Map(existedBl, request);
+                    _mapper.Map(request, existedBl);
                     await _unitOfWork.BlogRepository.DeleteAsync(existedBl);
                     await _unitOfWork.SaveAsync();
                     await transaction.CommitAsync();
@@ -134,7 +134,7 @@ namespace FLY.Business.Services.Implements
             }
         }
 
-        public async Task<bool> UpdateBlog(BlogRequest request)
+        public async Task<bool> UpdateBlog(UpdateBlogRequest request)
         {
             var bl = await _unitOfWork.BlogRepository.FindAsync(a => a.BlogId == request.BlogId);
             var existedBl = bl.FirstOrDefault();
@@ -147,7 +147,7 @@ namespace FLY.Business.Services.Implements
             {
                 try
                 {
-                    _mapper.Map(existedBl, request);
+                    _mapper.Map(request, existedBl);
                     await _unitOfWork.BlogRepository.UpdateAsync(existedBl);
                     await _unitOfWork.SaveAsync();
                     await transaction.CommitAsync();

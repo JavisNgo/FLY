@@ -74,7 +74,7 @@ namespace FLY.Controllers
         }
 
         [HttpPut("/api/v1/UBlog")]
-        public async Task<IActionResult> UpdateBlog(BlogRequest request)
+        public async Task<IActionResult> UpdateBlog(UpdateBlogRequest request)
         {
             try
             {
@@ -89,13 +89,13 @@ namespace FLY.Controllers
         }
 
         [HttpPost("/api/v1/CBlog")]
-        public async Task<IActionResult> CreateBlog(BlogResponse response)
+        public async Task<IActionResult> CreateBlog(CreateBlogResponse response)
         {
             try
             {
                 var result = await _blogService.CreateBlog(response);
                 if (result) return Ok("Create information success");
-                else return StatusCode(500, "Something wrong when create product");
+                else return StatusCode(500, "Something wrong when create blog");
             }
             catch (ApiException ex)
             {
@@ -104,7 +104,7 @@ namespace FLY.Controllers
         }
 
         [HttpDelete("/api/v1/DBlog")]
-        public async Task<IActionResult> DeleteBlog(BlogRequest request)
+        public async Task<IActionResult> DeleteBlog(UpdateBlogRequest request)
         {
             try
             {

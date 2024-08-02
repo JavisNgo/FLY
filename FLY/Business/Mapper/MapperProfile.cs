@@ -67,6 +67,9 @@ namespace FLY.Business.Mapper
             //Mapper Blog
             CreateMap<Blog, BlogResponse>();
             CreateMap<BlogRequest, Blog>();
+            CreateMap<CreateBlogResponse, Blog>();
+            CreateMap<UpdateBlogRequest, Blog>();
+
         }
     }
 }

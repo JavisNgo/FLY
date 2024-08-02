@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using FLY.Business.Exceptions;
 using FLY.Business.Models.Account;
 using FLY.Business.Models.Blog;
@@ -31,6 +32,33 @@ namespace FLY.Business.Services.Implements
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> UpdateCustomer(CustomerResponse response)
+        {
+            var bl = await _unitOfWork.AccountRepository.FindAsync(a => a.AccountId == response.AccountId);
+            var existedBl = bl.FirstOrDefault();
+            if (existedBl == null)
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, "Your Account is not existed");
+            }
+
+            using (var transaction = _unitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    _mapper.Map(response, existedBl);
+                    await _unitOfWork.AccountRepository.UpdateAsync(existedBl);
+                    await _unitOfWork.SaveAsync();
+                    await transaction.CommitAsync();
+                    return true;
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    return false;
+                }
             }
         }
 

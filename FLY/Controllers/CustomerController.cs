@@ -1,4 +1,6 @@
 ﻿using FLY.Business.Exceptions;
+using FLY.Business.Models.Account;
+using FLY.Business.Models.Blog;
 using FLY.Business.Models.Customer;
 using FLY.Business.Services;
 using FLY.Business.Services.Implements;
@@ -42,6 +44,21 @@ namespace FLY.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("/api/v1/UCustomer")]
+        public async Task<IActionResult> UpdateAccount(CustomerResponse response)
+        {
+            try
+            {
+                var result = await _customerService.UpdateCustomer(response);
+                if (result) return Ok("Update information success");
+                else return StatusCode(500, "Something wrong when update product");
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(((int)ex.statusCode), ex.Message);
             }
         }
     }

@@ -8,6 +8,8 @@ namespace FLY.Business.Services
     {
         Task<bool> UpdateCustomerInformation(UpdateInfoRequest request);
         Task<AccountResponse> GetByAccountIdAsync(int accountId);
+        Task<bool> UpdateCustomer(CustomerResponse response);
+
 
     }
 }

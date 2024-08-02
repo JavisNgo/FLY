@@ -34,7 +34,7 @@ namespace FLY.Business.Services.Implements
             }
 
             var map = _mapper.Map<Feedback>(request);
-            map.Status = 2;
+            map.Status = 1;
             await _unitOfWork.FeedbackRepository.InsertAsync(map);
             await Task.Delay(500);
             await _unitOfWork.SaveAsync();

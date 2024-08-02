@@ -10,7 +10,6 @@ namespace FLY.Business.Models.Account
 
         public string? Phone { get; set; }
 
-
         public string? Address { get; set; }
 
         public DateOnly? Dob { get; set; }

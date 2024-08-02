@@ -17,6 +17,7 @@ namespace FLY.Business.Models.Blog
         public string BlogContent { get; set; }
 
         public string BlogImage { get; set; }
+        public AccountResponse? Account { get; set; }
         public int Status { get; set; }
 
     }

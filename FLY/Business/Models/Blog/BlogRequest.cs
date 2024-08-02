@@ -1,14 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using FLY.Business.Models.Account;
+﻿using FLY.Business.Models.Account;
 
 namespace FLY.Business.Models.Blog
 {
-    public class BlogResponse
+    public class BlogRequest
     {
-        public int BlogId { get; set; }
-
         public int AccountId { get; set; }
+        public int BlogId { get; set; }
 
         public string BlogName { get; set; }
 
@@ -17,7 +14,7 @@ namespace FLY.Business.Models.Blog
         public string BlogContent { get; set; }
 
         public string BlogImage { get; set; }
-        public int Status { get; set; }
 
+        public AuthResponse Account { get; set; }
     }
 }

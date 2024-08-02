@@ -1,4 +1,7 @@
 ﻿using FLY.Business.Models.Blog;
+using FLY.Business.Models.Product;
+using FLY.Business.Models.Rating;
+using FLY.Business.Models.VoucherOfShop;
 
 namespace FLY.Business.Services
 {
@@ -6,5 +9,10 @@ namespace FLY.Business.Services
     {
         Task<List<BlogResponse>> GetAllAsync();
         Task<List<BlogResponse>> GetByAccountIdAsync(int accountId);
+        Task<BlogResponse> GetByBlogIdAsync(int blogId);
+        Task<List<BlogResponse>> GetBlogsByNameAsync(string name);
+        Task<bool> CreateBlog(BlogResponse respone);
+        Task<bool> UpdateBlog(BlogRequest request);
+        Task<bool> DeleteBlog(BlogRequest request);
     }
 }

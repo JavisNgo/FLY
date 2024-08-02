@@ -29,7 +29,7 @@ namespace FLY.Business.Services.Implements
                 if (!_cache.TryGetValue(cacheKey, out List<ProductResponse> shuffledItems))
                 {
                     var productList = await _unitOfWork.ProductRepository
-                        .GetAsync(p => p.Status == 1, null, "Shop", pageIndex, pageSize);
+                        .GetAsync(p => p.Status == 1, null, "Shop,ProductCategory", pageIndex, pageSize);
                     shuffledItems = _mapper.Map<List<ProductResponse>>(productList.ToList()
                         .OrderBy(x => _random.Next()));
                     _cache.Set(cacheKey, shuffledItems, TimeSpan.FromMinutes(5));
@@ -61,7 +61,7 @@ namespace FLY.Business.Services.Implements
         }
 
         public async Task<List<ProductResponse>> GetProductsByCategoryAsync(string categoryName, 
-            int pageIndex, int pageSize)
+            int? pageIndex, int? pageSize)
         {
             try
             {
@@ -77,12 +77,12 @@ namespace FLY.Business.Services.Implements
         }
 
         public async Task<List<ProductResponse>> GetProductsByNameAsync(string name, 
-            int pageIndex, int pageSize)
+            int? pageIndex, int? pageSize)
         {
             try
             {
                 var products = await _unitOfWork.ProductRepository.GetAsync(p => p.ProductName.Contains(name) && p.Status == 1,
-                    null, "ProductCategory", pageIndex, pageSize);
+                    null, "Shop,ProductCategory", pageIndex, pageSize);
                 return _mapper.Map<List<ProductResponse>>(products.ToList());
             }
             catch (Exception ex)

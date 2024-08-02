@@ -44,7 +44,7 @@ namespace FLY.Controllers
                                 bool check = await _authService.AuthenticateAccountAdvanced(account);
                                 if (check)
                                 {
-                                    return Ok("Email has been sent, please check email to verify your account, if you don't see it, check your spam");
+                                    return Ok(new { message = "Email has been sent, please check email to verify your account, if you don't see it, check your spam" });
                                 }
                                 else
                                 {
@@ -63,7 +63,7 @@ namespace FLY.Controllers
                             break;
                         case 2:
                             await _authService.SendVerificationEmailForRegister(account.Email);
-                            return Ok("Your account hasn't verified yet, please check email to verify your account, if you don't see it, check your spam");
+                            return Ok(new {message = "Your account hasn't verified yet, please check email to verify your account, if you don't see it, check your spam" });
                         default:
                             return BadRequest("Your status has not been configurated in system");
                     }

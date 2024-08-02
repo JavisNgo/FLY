@@ -19,12 +19,6 @@ namespace FLY.Controllers
             _authService = authService;
         }
 
-        [HttpGet("/customer-test"), Authorize(Policy = "CustomerPolicy")]
-        public IActionResult TestCustomerPolicy()
-        {
-            return Ok(new { message = "This is endpoint of customer." });
-        }
-
         [AllowAnonymous]
         [HttpPost("/api/v1/auth")]
         public async Task<IActionResult> Login([FromBody] AuthRequest loginInfo)
@@ -39,19 +33,19 @@ namespace FLY.Controllers
                         case 0:
                             return BadRequest("Your account is locked by administrator");
                         case 1:
-                            if(account.RoleId == 1 || account.RoleId == 2)
+                            if(account.RoleId == 1)
                             {
                                 bool check = await _authService.AuthenticateAccountAdvanced(account);
                                 if (check)
                                 {
-                                    return Ok("Email has been sent, please check email to verify your account, if you don't see it, check your spam");
+                                    return Ok(new {message = "Email has been sent, please check email to verify your account, if you don't see it, check your spam" });
                                 }
                                 else
                                 {
                                     return BadRequest("Something went wrong");
                                 }
                             } 
-                            else if(account.RoleId == 3)
+                            else if(account.RoleId == 3 || account.RoleId == 2)
                             {
                                 var token = await _authService.GenerateTokens(account.Email);
                                 if (token.refreshToken.IsNullOrEmpty() || token.accessToken.IsNullOrEmpty())

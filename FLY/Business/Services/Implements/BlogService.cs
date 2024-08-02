@@ -97,7 +97,7 @@ namespace FLY.Business.Services.Implements
             try
             {
                 var blogs = await _unitOfWork.BlogRepository.GetAsync(p => p.BlogName.Contains(name) && p.Status == 1,
-                    null, "Shop,ProductCategory");
+                    null, "Account");
                 return _mapper.Map<List<BlogResponse>>(blogs.ToList());
             }
             catch (Exception ex)
@@ -109,7 +109,8 @@ namespace FLY.Business.Services.Implements
         {
             try
             {
-                var blogs = await _unitOfWork.BlogRepository.GetAsync(filter: x => x.AccountId == accountId);
+                var blogs = await _unitOfWork.BlogRepository.GetAsync(filter: x => x.AccountId == accountId,
+                    includeProperties: "Account");
                 var result = _mapper.Map<List<BlogResponse>>(blogs);
                 return result;
             }
@@ -123,7 +124,7 @@ namespace FLY.Business.Services.Implements
         {
             try
             {
-                var blogs = await _unitOfWork.BlogRepository.GetAsync(filter: x => x.BlogId == blogId);
+                var blogs = await _unitOfWork.BlogRepository.GetByIDAsync(blogId);
                 var result = _mapper.Map<BlogResponse>(blogs);
                 return result;
             }

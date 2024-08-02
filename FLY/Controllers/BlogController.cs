@@ -32,7 +32,7 @@ namespace FLY.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpGet("/api/v1/blogs/name")]
+        [HttpGet("/api/v1/blogs/blogName")]
         public async Task<IActionResult> GetBlogsByName([FromQuery] string blogName)
         {
             try
@@ -46,7 +46,7 @@ namespace FLY.Controllers
             }
         }
         [HttpGet("/api/v1/blogs/{blogId}")]
-        public async Task<IActionResult> GetBlogsByBlogId([FromQuery] int blogId)
+        public async Task<IActionResult> GetBlogsByBlogId(int blogId)
         {
             try
             {
@@ -59,8 +59,8 @@ namespace FLY.Controllers
             }
         }
 
-        [HttpGet("/api/v1/blogs/{accountId}")]
-        public async Task<IActionResult> GetBlogsByAccountId([FromQuery] int accountId)
+        [HttpGet("/api/v1/myBlogs/{accountId}")]
+        public async Task<IActionResult> GetBlogsByAccountId(int accountId)
         {
             try
             {

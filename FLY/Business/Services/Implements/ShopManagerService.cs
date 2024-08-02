@@ -180,7 +180,7 @@ namespace FLY.Business.Services.Implements
 
         // Manager Order
 
-        public async Task<List<OrderResponse>> GetAllOrdersAsync(int shopId)
+        public async Task<List<OrderHistoryResponse>> GetAllOrdersAsync(int shopId)
         {
             try
             {
@@ -188,9 +188,10 @@ namespace FLY.Business.Services.Implements
                                                       .FindAsync(od => od.ShopId == shopId);
                 var orderIds = orderDetailIds.Select(od => od.OrderId).Distinct().ToList();
 
-                var orders = await _unitOfWork.OrderRepository
-                                              .FindAsync(order => orderIds.Contains(order.OrderId));
-                var result = _mapper.Map<List<OrderResponse>>(orders.ToList());
+                var orders = await _unitOfWork.OrderRepository.GetAsync(filter: order => orderIds.Contains(order.OrderId),
+                    includeProperties: "Account");
+            
+                var result = _mapper.Map<List<OrderHistoryResponse>>(orders.ToList());
                 return result;
             }
             catch (Exception ex)

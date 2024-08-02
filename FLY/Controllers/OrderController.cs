@@ -1,6 +1,7 @@
 ﻿using FLY.Business.Exceptions;
 using FLY.Business.Models.Order;
 using FLY.Business.Services;
+using FLY.Business.Services.Implements;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,20 @@ namespace FLY.Controllers
             catch (ApiException ex)
             {
                 return StatusCode((int)ex.statusCode, ex.Message);
+            }
+        }
+
+        [HttpGet("/api/v1/myHistoryOrrder/{accountId}")]
+        public async Task<IActionResult> GetBlogsByAccountId(int accountId)
+        {
+            try
+            {
+                var result = await _service.GetListOrderH(accountId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
     }

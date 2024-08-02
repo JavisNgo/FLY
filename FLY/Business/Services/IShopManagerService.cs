@@ -19,7 +19,7 @@ namespace FLY.Business.Services
         Task<bool> DeleteProductInformation(ProductRequest request);
         Task<bool> CreateProductInformation(ProductResponse response);
         // Manager Order
-        Task<List<OrderResponse>> GetAllOrdersAsync(int ShopId);
+        Task<List<OrderHistoryResponse>> GetAllOrdersAsync(int ShopId);
         Task<bool> UpdateOrderInformation(OrderRequest request);
         Task<List<OrderDetailResponse>> GetOrderDetailAsync(int OrderId);
 

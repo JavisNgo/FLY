@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FLY.Business.Exceptions;
+using FLY.Business.Models.Blog;
 using FLY.Business.Models.Order;
 using FLY.DataAccess.Entities;
 using FLY.DataAccess.Repositories;
@@ -100,6 +101,20 @@ namespace FLY.Business.Services.Implements
                 }
             }
             return response;
+        }
+
+        public async Task<List<OrderHistoryResponse>> GetListOrderH(int  accountId)
+        {
+            try
+            {
+                var oh = await _unitOfWork.OrderRepository.GetAsync(p => p.AccountId == accountId,
+                    null, "Account");
+                return _mapper.Map<List<OrderHistoryResponse>>(oh.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

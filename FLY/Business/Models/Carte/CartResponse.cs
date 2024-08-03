@@ -13,6 +13,8 @@
         public string ProductName { get; set; }
         public string ImageProduct { get; set; } = null!;
         public double ProductPrice { get; set; }
+        public int ShopId { get; set; }
+        public int ProductId { get; set; }
         public int CartQuantity { get; set; }
     }
 }

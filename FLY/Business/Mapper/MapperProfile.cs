@@ -64,6 +64,8 @@ namespace FLY.Business.Mapper
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Account.Email));
             CreateMap<Cart, ProductInCartResponse>()
                 .ForMember(dest => dest.CartQuantity, src => src.MapFrom(x => x.CartQuantity))
+                .ForMember(dest => dest.ShopId, src => src.MapFrom(x => x.Product.ShopId))
+                .ForMember(dest => dest.ProductId, src => src.MapFrom(x => x.Product.ProductId))
                 .ForMember(dest => dest.ProductPrice, src => src.MapFrom(x => x.Product.ProductPrice))
                 .ForMember(dest => dest.ProductName, src => src.MapFrom(x => x.Product.ProductName))
                 .ForMember(dest => dest.ProductCategoryName, src => src.MapFrom(x => x.Product.ProductCategory.ProductCategoryName));

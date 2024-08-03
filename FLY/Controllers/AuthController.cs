@@ -119,9 +119,9 @@ namespace FLY.Controllers
                 if(check)
                 {
                     await _authService.SendVerificationEmailForRegister(request.Email);
-                    return Ok("Create success, please check your email to verify your account, if you don't see it, check your spam");
+                    return Ok(new { message = "Create success, please check your email to verify your account, if you don't see it, check your spam" });
                 }
-                return BadRequest("Something went wrong");
+                return BadRequest(new {message = "Account already existed or something wrong"});
             }
             catch (Exception ex)
             {
@@ -131,15 +131,19 @@ namespace FLY.Controllers
 
         [AllowAnonymous]
         [HttpPost("/api/v1/register/seller")]
-        public async Task<IActionResult> RegisterSeller([FromBody] RegisterRequest request)
+        public async Task<IActionResult> RegisterSeller([FromBody] RegisterSellerRequest request)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 bool check = await _authService.RegisterSeller(request);
                 if (check)
                 {
                     await _authService.SendVerificationEmailForRegister(request.Email);
-                    return Ok("Create success, please check your email to verify your account, if you don't see it, check your spam");
+                    return Ok(new { message = "Create success, please check your email to verify your account, if you don't see it, check your spam" });
                 }
                 return BadRequest("Something went wrong");
             }

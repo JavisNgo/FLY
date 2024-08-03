@@ -383,7 +383,7 @@ namespace FLY.Business.Services.Implements
                 }
             }
         }
-        public async Task<bool> RegisterSeller(RegisterRequest registerSellerRequest)
+        public async Task<bool> RegisterSeller(RegisterSellerRequest registerSellerRequest)
         {
             var accounts = await _unitOfWork.AccountRepository.FindAsync(a => a.Email == registerSellerRequest.Email);
             var existAccount = accounts.FirstOrDefault();
@@ -419,26 +419,29 @@ namespace FLY.Business.Services.Implements
                         }
                     }
                 }
-            }
-            using (var transaction = _unitOfWork.BeginTransaction())
+            } else
             {
-                try
+                using (var transaction = _unitOfWork.BeginTransaction())
                 {
-                    var account = _mapper.Map<Account>(registerSellerRequest);
-                    account.Status = 2;
-                    account.RoleId = 2;
-                    account.Password = await HashedPassword(account.Password);
-                    await _unitOfWork.AccountRepository.InsertAsync(account);
-                    await _unitOfWork.SaveAsync();
-                    await transaction.CommitAsync();
-                    return true;
-                }
-                catch
-                {
-                    await transaction.RollbackAsync();
-                    return false;
+                    try
+                    {
+                        var account = _mapper.Map<Account>(registerSellerRequest);
+                        account.Status = 2;
+                        account.RoleId = 2;
+                        account.Password = await HashedPassword(account.Password);
+                        await _unitOfWork.AccountRepository.InsertAsync(account);
+                        await _unitOfWork.SaveAsync();
+                        await transaction.CommitAsync();
+                        return true;
+                    }
+                    catch
+                    {
+                        await transaction.RollbackAsync();
+                        return false;
+                    }
                 }
             }
+            
         }
 
         public async Task<(string accessToken, string refreshToken)> RefreshingAccessToken(string oldRefreshToken)

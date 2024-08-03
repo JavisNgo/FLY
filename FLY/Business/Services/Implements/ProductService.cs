@@ -67,7 +67,7 @@ namespace FLY.Business.Services.Implements
             {
                 var products = await _unitOfWork.ProductRepository
                     .GetAsync(p => p.ProductCategory.ProductCategoryName == categoryName && p.Status == 1, 
-                        null, "ProductCategory", pageIndex, pageSize);
+                        null, "Shop,ProductCategory", pageIndex, pageSize);
                 return _mapper.Map<List<ProductResponse>>(products.ToList());
             }
             catch (Exception ex)

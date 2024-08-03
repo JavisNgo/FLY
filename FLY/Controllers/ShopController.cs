@@ -18,7 +18,7 @@ namespace FLY.Controllers
             _shopService = shopService;
         }
 
-        [HttpPost("/api/v1/shop")]
+        [HttpGet("/api/v1/shop/name")]
         public async Task<IActionResult> GetShopByName([FromQuery] string shopName)
         {
             try

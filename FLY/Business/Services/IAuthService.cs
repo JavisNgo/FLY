@@ -12,7 +12,7 @@ namespace FLY.Business.Services
         Task<(string accessToken, string refreshToken)> GenerateTokens(string email);
         Task<(string accessToken, string refreshToken)> RefreshingAccessToken(string oldRefreshToken);
         Task<bool> RegisterCustomer(RegisterRequest registerCustomerRequest);
-        Task<bool> RegisterSeller(RegisterRequest registerCustomerRequest);
+        Task<bool> RegisterSeller(RegisterSellerRequest registerCustomerRequest);
         Task SendVerificationEmailForRegister(string email);
         Task SendVerificationEmail(string email);
         Task<bool> VerifyAccount(string email, string verificationCode);

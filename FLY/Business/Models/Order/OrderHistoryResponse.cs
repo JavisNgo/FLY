@@ -1,4 +1,5 @@
 ﻿using FLY.Business.Models.Account;
+using FLY.Business.Models.OrderDetail;
 
 namespace FLY.Business.Models.Order
 {
@@ -9,6 +10,6 @@ namespace FLY.Business.Models.Order
         public DateTime OrderDate { get; set; }
         public float TotalPrice { get; set; }
         public AccountResponse Account { get; set; }
-
+        public ICollection<OrderHistoryByShopResponse> OrderDetails { get; set; }
     }
 }

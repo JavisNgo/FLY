@@ -108,7 +108,7 @@ namespace FLY.Business.Services.Implements
             try
             {
                 var oh = await _unitOfWork.OrderRepository.GetAsync(p => p.AccountId == accountId,
-                    null, "Account");
+                    null, "Account,OrderDetails,OrderDetails.Product,OrderDetails.Shop");
                 return _mapper.Map<List<OrderHistoryResponse>>(oh.ToList());
             }
             catch (Exception ex)

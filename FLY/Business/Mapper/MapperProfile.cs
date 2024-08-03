@@ -55,6 +55,11 @@ namespace FLY.Business.Mapper
             CreateMap<OrderHistoryResponse, Order>();
             CreateMap<Order, OrderHistoryResponse>();
             CreateMap<CreateOrderRequest, Order>();
+            CreateMap<Order, OrderHistoryResponse>()
+                .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+            CreateMap<OrderDetail, OrderHistoryByShopResponse>()
+                        .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
+                        .ForMember(dest => dest.Shop, opt => opt.MapFrom(src => src.Shop));
             ///Mapper OrderDetail
             CreateMap<OrderDetail, OrderDetailResponse>();
             CreateMap<OrderDetailRequest, OrderDetail>();

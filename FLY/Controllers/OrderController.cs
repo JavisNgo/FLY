@@ -45,5 +45,19 @@ namespace FLY.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("/api/v1/getOrderById/{orderId}")]
+        public async Task<IActionResult> GetOrderById(int orderId)
+        {
+            try
+            {
+                var result = await _service.GetOrderById(orderId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

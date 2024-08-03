@@ -6,6 +6,8 @@ namespace FLY.Business.Services
     {
         Task<OrderResponse> CreateOrder(CreateOrderRequest request);
         Task<List<OrderHistoryResponse>> GetListOrderH(int accountId);
+        Task<List<OrderHistoryResponse>> GetOrderById(int orderId);
+
 
     }
 }

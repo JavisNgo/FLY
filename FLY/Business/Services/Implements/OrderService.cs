@@ -5,6 +5,7 @@ using FLY.Business.Models.Order;
 using FLY.DataAccess.Entities;
 using FLY.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
@@ -114,6 +115,30 @@ namespace FLY.Business.Services.Implements
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<OrderHistoryResponse>> GetOrderById(int orderId)
+        {
+            try
+            {
+                var order = await _unitOfWork.OrderRepository.GetAsync(
+                    p => p.OrderId == orderId,
+                    null,
+                    "Account,OrderDetails,OrderDetails.Product,OrderDetails.Shop"
+                );
+
+                if (order == null)
+                {
+                    throw new KeyNotFoundException($"Order with ID {orderId} not found.");
+                }
+
+                return _mapper.Map<List<OrderHistoryResponse>>(order.ToList());
+            }
+            catch (Exception ex)
+            {
+                // You might want to log the exception here
+                throw new Exception($"An error occurred while retrieving the order: {ex.Message}", ex);
             }
         }
     }
